@@ -1,98 +1,136 @@
-# Minimal Debian Dev Container Image
+# Umajin Dev Containers
 
-A small, Debian-based development container image designed as a lightweight foundation for VS Code Dev Containers.
+A collection of reusable Dev Container images and Features for development environments.
 
-The goal is to provide the essential developer experience without the overhead of a full-featured base image.
-It's much smaller than the official base image from microsoft.
+The goal is to provide small, composable development environments that can be extended with optional language and tooling Features.
 
-## Features
+## Repository Structure
 
-Based on:
+```
+.
+├── images/
+│   └── minimal/
+│       ├── Dockerfile
+│       ├── Taskfile.yml
+│       └── README.md
+│
+├── src/
+│   ├── node/
+│   ├── php/
+│   ├── go/
+│   └── ...
+│
+└── .github/
+    └── workflows/
+```
 
-- Debian Trixie Slim
+## Images
 
-Included tools:
+Images provide the base development environment.
+
+### Minimal
+
+The minimal image provides a lightweight developer shell with common tools installed:
 
 - Bash
 - Git
-- Curl
-- CA certificates
-- Unzip
-- jq
-- ripgrep
-- fzf (ctrl+r finder)
-- procps utilities (ping etc)
-- Taskfile.dev
-- Starship prompt
+- Task
+- Starship
+- Common CLI utilities
 
-## Design Goals
+See [`images/minimal`](./images/minimal) for details.
 
-This image aims to be:
+## Features
 
-- Small
-- Fast to build
-- Easy to extend
-- Suitable as a reusable base image for multiple projects
+Features extend the base image with additional development tooling.
 
-It intentionally does not include:
+Examples:
 
-- Programming language runtimes
-- Framework-specific tooling
-- Docker-in-Docker
+- Node.js
+- PHP
+- Go
+- Python
 - Kubernetes tooling
-- Build systems
-- Application services
+- Cloud tooling
 
-Add only what each project requires.
+Features can be added independently depending on the requirements of the project.
 
-## Using with VS Code Dev Containers
-
-Example `.devcontainer/devcontainer.json`:
+Example:
 
 ```json
 {
-  "name": "Development Container",
-  "image": "ghcr.io/umajin/devcontainer:latest",
-
-  // Add whatever features you require (e.g. node & python)
-  // See: https://containers.dev/features
-  "ghcr.io/devcontainers/features/node:2": {},
-  "ghcr.io/devcontainers/features/python:1": {},
+    "image": "ghcr.io/umajin/devcontainer:latest",
+    "features": {
+        "ghcr.io/umajin/devcontainer/node:1": {},
+        "ghcr.io/umajin/devcontainer/php:1": {}
+    }
 }
 ```
 
-## Building the image
+## Usage
 
-If you change this image and need to release a new version, follow the steps below.
+Add the image or features to your `devcontainer.json`.
 
-1. Create a github personal access token. Specifically a classic token 
-     with: `package:read, package:delete` permissions.
-2. Create a .env file containing the following params
+Example:
 
-```
-GITHUB_OWNER=umajin
-IMAGE_NAME=devcontainer
-GITHUB_USER={yourusername}
-GITHUB_TOKEN={your-github-pat}
-```
-
-Then run 
-
-```
-task build`
+```json
+{
+    "name": "My Development Environment",
+    "image": "ghcr.io/umajin/devcontainer:latest",
+    "features": {
+        "ghcr.io/umajin/devcontainer/node:1": {}
+    }
+}
 ```
 
-3. Test the image
+## Development
 
+### Building an image locally
+
+Images contain their own build tasks.
+
+Example:
+
+```bash
+cd images/minimal
+task build
+```
+
+### Adding a Feature
+
+Create a new Feature under `src`:
 
 ```
-docker run -ti --rm ghcr.io/umajin/devcontainer
+src/
+└── my-feature/
+    ├── devcontainer-feature.json
+    └── install.sh
 ```
 
-This will start the container with a new shell and allow you to look around and check if your changes worked correctly.
+Features should be:
 
-4. Release the new image
+- Independent
+- Versioned
+- Optional
+- Composable with other Features
+
+## Publishing
+
+Images and Features are published to GitHub Container Registry.
+
+Releases are automated through GitHub Actions.
+
+Published artifacts:
 
 ```
-task release
+ghcr.io/umajin/devcontainer
+ghcr.io/umajin/devcontainer/<feature>
 ```
+
+## Design Goals
+
+- Keep the base image small
+- Prefer composable Features over large images
+- Avoid unnecessary tooling in every environment
+- Provide reproducible development environments
+- Make adding new tooling simple

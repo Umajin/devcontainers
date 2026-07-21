@@ -25,4 +25,4 @@ RUN useradd -m -s /bin/bash vscode \
     && echo "vscode ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/vscode \
     && echo 'eval "$(starship init bash)"' >> /etc/bash.bashrc
 
-USER vscode
+CMD ["bash"]

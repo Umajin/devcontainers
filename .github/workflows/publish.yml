@@ -8,14 +8,14 @@ on:
       - "v*.*.*"
     paths:
       - "images/minimal/**"
-      - ".github/workflows/image-build.yml"
+      - ".github/workflows/publish.yml"
 
   pull_request:
     branches:
       - main
     paths:
       - "images/minimal/**"
-      - ".github/workflows/image-build.yml"
+      - ".github/workflows/publish.yml"
 
   workflow_dispatch:
 

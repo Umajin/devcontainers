@@ -1,0 +1,34 @@
+version: "3"
+
+dotenv: 
+  - .env
+
+vars:
+  IMAGE: ghcr.io/{{.GITHUB_OWNER}}/{{.IMAGE_NAME}}
+  TAG:
+    sh: git rev-parse --short HEAD
+
+tasks:
+  build:
+    desc: Build container image
+    cmds:
+      - docker build -t {{.IMAGE}}:{{.TAG}} -t {{.IMAGE}}:latest .
+
+  push:
+    desc: Push container image to GitHub Container Registry
+    deps:
+      - build
+    cmds:
+      - docker push {{.IMAGE}}:{{.TAG}}
+      - docker push {{.IMAGE}}:latest
+
+  login:
+    desc: Login to GitHub Container Registry
+    cmds:
+      - echo "$GITHUB_TOKEN" | docker login ghcr.io -u {{.GITHUB_USER}} --password-stdin
+
+  release:
+    desc: Build and push container image
+    deps:
+      - login
+      - push

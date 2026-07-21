@@ -53,13 +53,21 @@ Example `.devcontainer/devcontainer.json`:
 {
   "name": "Development Container",
   "image": "ghcr.io/umajin/devcontainer:latest",
-  "overrideCommand": true
+
+  // Add whatever features you require (e.g. node & python)
+  // See: https://containers.dev/features
+  "ghcr.io/devcontainers/features/node:2": {},
+  "ghcr.io/devcontainers/features/python:1": {},
 }
 ```
 
-## Building
+## Building the image
 
-Create a .env file containing the following params
+If you change this image and need to release a new version, follow the steps below.
+
+1. Create a github personal access token. Specifically a classic token 
+     with: `package:read, package:delete` permissions.
+2. Create a .env file containing the following params
 
 ```
 GITHUB_OWNER=umajin
@@ -68,4 +76,23 @@ GITHUB_USER={yourusername}
 GITHUB_TOKEN={your-github-pat}
 ```
 
-For the github personal access token, create a classic token with: `package:read, package:delete` permissions.
+Then run 
+
+```
+task build`
+```
+
+3. Test the image
+
+
+```
+docker run -ti --rm ghcr.io/umajin/devcontainer
+```
+
+This will start the container with a new shell and allow you to look around and check if your changes worked correctly.
+
+4. Release the new image
+
+```
+task release
+```

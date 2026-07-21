@@ -28,7 +28,6 @@ tasks:
       - docker push {{.IMAGE}}:latest
 
   login:
-    desc: Login to GitHub Container Registry
     cmds:
       - echo "$GITHUB_TOKEN" | docker login ghcr.io -u {{.GITHUB_USER}} --password-stdin
 

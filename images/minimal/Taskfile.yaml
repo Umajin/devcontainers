@@ -1,10 +1,10 @@
 version: "3"
 
-dotenv: 
-  - .env
-
 vars:
+  GITHUB_OWNER: umajin
+  IMAGE_NAME: devcontainer
   IMAGE: ghcr.io/{{.GITHUB_OWNER}}/{{.IMAGE_NAME}}
+
   TAG:
     sh: git rev-parse --short HEAD
 
@@ -13,26 +13,18 @@ tasks:
     silent: true
     cmds:
       - task --list --sort none
-      
+
   build:
     desc: Build container image
     cmds:
-      - docker build -t {{.IMAGE}}:{{.TAG}} -t {{.IMAGE}}:latest .
+      - docker build \
+          -t {{.IMAGE}}:{{.TAG}} \
+          -t {{.IMAGE}}:latest \
+          .
 
-  push:
-    desc: Push container image to GitHub Container Registry
+  run:
+    desc: Run container image locally
     deps:
       - build
     cmds:
-      - docker push {{.IMAGE}}:{{.TAG}}
-      - docker push {{.IMAGE}}:latest
-
-  login:
-    cmds:
-      - echo "$GITHUB_TOKEN" | docker login ghcr.io -u {{.GITHUB_USER}} --password-stdin
-
-  release:
-    desc: Build and push container image
-    deps:
-      - login
-      - push
+      - docker run --rm -it {{.IMAGE}}:{{.TAG}}

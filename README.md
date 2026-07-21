@@ -3,7 +3,7 @@
 A small, Debian-based development container image designed as a lightweight foundation for VS Code Dev Containers.
 
 The goal is to provide the essential developer experience without the overhead of a full-featured base image.
-It's much smaller than the official one from MS.
+It's much smaller than the official base image from microsoft.
 
 ## Features
 
@@ -20,8 +20,9 @@ Included tools:
 - Unzip
 - jq
 - ripgrep
-- fzf
-- procps utilities
+- fzf (ctrl+r finder)
+- procps utilities (ping etc)
+- Taskfile.dev
 - Starship prompt
 
 ## Design Goals
@@ -54,3 +55,17 @@ Example `.devcontainer/devcontainer.json`:
   "image": "ghcr.io/umajin/devcontainer:latest",
   "overrideCommand": true
 }
+```
+
+## Building
+
+Create a .env file containing the following params
+
+```
+GITHUB_OWNER=umajin
+IMAGE_NAME=devcontainer
+GITHUB_USER={yourusername}
+GITHUB_TOKEN={your-github-pat}
+```
+
+For the github personal access token, create a classic token with: `package:read, package:delete` permissions.

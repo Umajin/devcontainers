@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*.*.*"
     paths:
       - "images/minimal/**"
       - ".github/workflows/image-build.yml"
@@ -19,7 +21,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}/devcontainers
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/devcontainers
 
 jobs:
   build:
@@ -48,7 +50,11 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha
+            type=semver,pattern={{version}}
 
       - name: Build and push
         uses: docker/build-push-action@v6

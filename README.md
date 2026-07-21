@@ -59,10 +59,10 @@ Example:
 
 ```json
 {
-    "image": "ghcr.io/umajin/devcontainer:latest",
+    "image": "ghcr.io/umajin/devcontainers:latest",
     "features": {
-        "ghcr.io/umajin/devcontainer/node:1": {},
-        "ghcr.io/umajin/devcontainer/php:1": {}
+        "ghcr.io/umajin/devcontainers/node:1": {},
+        "ghcr.io/umajin/devcontainers/php:1": {}
     }
 }
 ```
@@ -76,9 +76,9 @@ Example:
 ```json
 {
     "name": "My Development Environment",
-    "image": "ghcr.io/umajin/devcontainer:latest",
+    "image": "ghcr.io/umajin/devcontainers:latest",
     "features": {
-        "ghcr.io/umajin/devcontainer/node:1": {}
+        "ghcr.io/umajin/devcontainers/node:1": {}
     }
 }
 ```
@@ -123,8 +123,8 @@ Releases are automated through GitHub Actions.
 Published artifacts:
 
 ```
-ghcr.io/umajin/devcontainer
-ghcr.io/umajin/devcontainer/<feature>
+ghcr.io/umajin/devcontainers
+ghcr.io/umajin/devcontainers/<feature>
 ```
 
 ## Design Goals

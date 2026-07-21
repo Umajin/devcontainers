@@ -15,7 +15,9 @@ RUN apt-get update && \
         iputils-ping \
         sudo \
         starship \
-    && curl -1sLf 'https://dl.cloudsmith.io/public/task/task/setup.deb.sh' | bash && \
+        libatomic1 && \
+        openssh-client && \
+    curl -1sLf 'https://dl.cloudsmith.io/public/task/task/setup.deb.sh' | bash && \
     apt-get install -y --no-install-recommends task && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

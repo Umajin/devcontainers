@@ -30,4 +30,7 @@ fi
 if [ -n "$PNPM_VERSION" ]; then
     echo "Installing pnpm ${PNPM_VERSION}"
     volta install "pnpm@${PNPM_VERSION}"
+
+    echo "Setting min release age to 7 days"
+    pnpm config set minimumReleaseAge 10080
 fi

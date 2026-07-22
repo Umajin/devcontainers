@@ -19,7 +19,7 @@ jobs:
           publish-features: "true"
           base-path-to-features: "./features/src"
           generate-docs: "true"
-          features-namespace: ghcr.io/umajin/devcontainers/features
+          features-namespace: "ghcr.io/umajin/devcontainers/features"
           
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

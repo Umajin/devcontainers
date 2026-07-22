@@ -16,7 +16,7 @@ jobs:
           - volta
         baseImage:
           - ghcr.io/umajin/devcontainers:latest
-          
+
     steps:
       - uses: actions/checkout@v4
 
@@ -32,8 +32,7 @@ jobs:
     strategy:
       matrix:
         features:
-          - color
-          - hello
+          - volta
     steps:
       - uses: actions/checkout@v4
 

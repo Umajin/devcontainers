@@ -1,0 +1,7 @@
+{
+  "id": "volta",
+  "version": "1.0.0",
+  "name": "Volta",
+  "description": "Installs Volta JavaScript toolchain manager",
+  "documentationURL": "https://volta.sh"
+}

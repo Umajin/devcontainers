@@ -1,0 +1,44 @@
+name: Release Feature
+
+on:
+  push:
+    tags:
+      - "*-v*"
+
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract feature name
+        id: feature
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          FEATURE=${TAG%-v*}
+
+          echo "name=$FEATURE" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dev Container CLI
+        run: npm install -g @devcontainers/cli
+
+      - name: Publish feature
+        run: |
+          devcontainer features publish \
+            ./features/src/${{ steps.feature.outputs.name }} \
+            --registry ghcr.io

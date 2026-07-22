@@ -20,3 +20,8 @@ export PATH="\$VOLTA_HOME/bin:\$PATH"
 EOF
 
 chmod +x /etc/profile.d/volta.sh
+
+# Install helper command
+install -m 755 \
+    volta-bootstrap-project \
+    /usr/local/bin/volta-bootstrap-project

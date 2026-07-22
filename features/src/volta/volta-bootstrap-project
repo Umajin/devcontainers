@@ -1,0 +1,33 @@
+#!/bin/bash
+set -euo pipefail
+
+PROJECT_DIR="${1:-.}"
+
+cd "$PROJECT_DIR"
+
+if [ ! -f package.json ]; then
+    echo "No package.json found in ${PROJECT_DIR}"
+    exit 0
+fi
+
+NODE_VERSION=$(jq -r '.volta.node // empty' package.json)
+
+PNPM_VERSION=$(jq -r '
+  if .volta.pnpm then
+    .volta.pnpm
+  elif (.packageManager // "") | startswith("pnpm@") then
+    .packageManager | split("@")[1] | split("+")[0]
+  else
+    empty
+  end
+' package.json)
+
+if [ -n "$NODE_VERSION" ]; then
+    echo "Installing node ${NODE_VERSION}"
+    volta install "node@${NODE_VERSION}"
+fi
+
+if [ -n "$PNPM_VERSION" ]; then
+    echo "Installing pnpm ${PNPM_VERSION}"
+    volta install "pnpm@${PNPM_VERSION}"
+fi

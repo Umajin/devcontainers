@@ -1,0 +1,13 @@
+{
+  "id": "php-composer",
+  "version": "1.0.0",
+  "name": "PHP CLI and Composer",
+  "description": "Installs PHP CLI and Composer globally.",
+  "options": {
+    "phpVersion": {
+      "type": "string",
+      "default": "8.5",
+      "description": "PHP version to install"
+    }
+  }
+}

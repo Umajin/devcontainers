@@ -1,0 +1,16 @@
+{
+  "default": {
+    "image": "ghcr.io/umajin/devcontainers",
+    "features": {
+      "php-composer": {}
+    }
+  },
+  "php85": {
+    "image": "ghcr.io/umajin/devcontainers",
+    "features": {
+      "php-composer": {
+        "phpVersion": "8.5"
+      }
+    }
+  }
+}

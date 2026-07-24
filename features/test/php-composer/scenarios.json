@@ -5,6 +5,14 @@
       "php-composer": {}
     }
   },
+  "php84": {
+    "image": "ghcr.io/umajin/devcontainers",
+    "features": {
+      "php-composer": {
+        "phpVersion": "8.4"
+      }
+    }
+  },
   "php85": {
     "image": "ghcr.io/umajin/devcontainers",
     "features": {

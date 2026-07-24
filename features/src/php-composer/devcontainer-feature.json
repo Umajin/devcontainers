@@ -4,7 +4,7 @@
   "name": "PHP CLI and Composer",
   "description": "Installs PHP CLI and Composer globally.",
   "options": {
-    "php_version": {
+    "phpVersion": {
       "type": "string",
       "default": "8.5",
       "description": "PHP version to install"

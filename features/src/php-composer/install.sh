@@ -2,11 +2,16 @@
 
 set -euo pipefail
 
-PHP_VERSION="${PHP_VERSION:-8.5}"
+PHPVERSION="${PHPVERSION:-8.5}"
 
-echo "Installing PHP ${PHP_VERSION}"
+echo "Installing PHP ${PHPVERSION}"
 
 apt-get update
+sudo apt install -y lsb-release ca-certificates curl
+sudo mkdir -p /etc/apt/keyrings
+curl -sSL https://packages.sury.org/php/apt.gpg -o /etc/apt/keyrings/sury-php.gpg
+echo "deb [signed-by=/etc/apt/keyrings/sury-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
+sudo apt update
 
 if ! apt-cache show "php${PHP_VERSION}-cli" >/dev/null 2>&1; then
     echo "PHP ${PHP_VERSION} is not available in this image"
@@ -14,10 +19,10 @@ if ! apt-cache show "php${PHP_VERSION}-cli" >/dev/null 2>&1; then
 fi
 
 apt-get install -y --no-install-recommends \
-    "php${PHP_VERSION}-cli" \
-    "php${PHP_VERSION}-mbstring" \
-    "php${PHP_VERSION}-xml" \
-    "php${PHP_VERSION}-curl" \
+    "php${PHPVERSION}-cli" \
+    "php${PHPVERSION}-mbstring" \
+    "php${PHPVERSION}-xml" \
+    "php${PHPVERSION}-curl" \
     unzip \
     curl
 

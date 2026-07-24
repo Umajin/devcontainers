@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PHPVERSION="${PHPVERSION:-8.5}"
+PHPVERSION="${PHPVERSION:-"8.5"}"
 
 echo "Installing PHP ${PHPVERSION}"
 
